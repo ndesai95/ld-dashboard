@@ -20,19 +20,22 @@ const ColumnHeader = () => {
         alignItems: "center",
         display: "grid",
         gap: "16px",
-        gridTemplateColumns: "1fr 1fr 1fr",
+        gridTemplateColumns: "1fr 1fr 1fr 1fr",
         padding: "10px",
         margin: "10px",
       }}
     >
       <Text variant="detailMShort" bold>
-        key
+        Name
       </Text>
       <Text variant="detailMShort" bold>
-        value
+        Staging 1
       </Text>
       <Text variant="detailMShort" bold>
-        environment
+        Staging 2
+      </Text>
+      <Text variant="detailMShort" bold>
+        Environment
       </Text>
     </Box>
   );
@@ -41,6 +44,16 @@ export default function Home() {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const onClickAddProject = () => setShowDropdown(true);
+
+  let grouped = getLdFlags.reduce((result: any, currentValue: any) => {
+    (result[currentValue["name"]] = result[currentValue["name"]] || []).push(
+      currentValue
+    );
+    return result;
+  }, {});
+
+  console.log(Object.values(grouped));
+
   return (
     <>
       <Card className={styles.main}>
@@ -55,13 +68,11 @@ export default function Home() {
           <FlexItem flexBasis="66" style={{ padding: "10px" }}>
             <Box style={{ padding: "5xl" }}>
               <ColumnHeader />
-              {getLdFlags.map((flag: LdFlag) => {
+              {Object.values(grouped).map((flags: any) => {
                 return (
-                  <FeatureFlagItem
-                    key={flag.key}
-                    value={flag.value}
-                    environment={flag.environment}
-                  />
+                  <Box key={"test"}>
+                    <FeatureFlagItem flags={flags} />;
+                  </Box>
                 );
               })}
             </Box>
