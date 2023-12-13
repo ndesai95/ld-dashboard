@@ -48,3 +48,20 @@ export const getLdFlags = async () => {
     }
   ]
 }
+
+export const getProjects = async () => {
+  return [
+    {
+      projectName: 'Auto Retail Lending',
+      id: 'arl'
+    },
+    {
+      projectName: 'Auto Retail',
+      id: 'uar',
+    },
+    {
+      projectName: 'Auto Refi',
+      id: 'refi',
+    }
+  ]
+}
