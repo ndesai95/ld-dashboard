@@ -1,55 +1,46 @@
 export type LdFlag = {
   name: string;
-  value: any;
-  environment: string;
+  values: {
+    s1: boolean | number;
+    s2: boolean | number;
+    prod: boolean | number;
+  };
 };
 
+/* { 
+    name: flagName, 
+    values: 
+      {
+        staging1: staging1Value,
+        staging2: staging2Value,
+        production: productionValue
+      } 
+    }
+  */
 export const getLdFlags: LdFlag[] = [
   {
     name: "flagName1",
-    value: false,
-    environment: "S1",
-  },
-  {
-    name: "flagName1",
-    value: false,
-    environment: "S2",
-  },
-  {
-    name: "flagName1",
-    value: true,
-    environment: "PROD",
+    values: {
+      s1: false,
+      s2: false,
+      prod: true,
+    },
   },
   {
     name: "flagName2",
-    value: false,
-    environment: "S1",
-  },
-  {
-    name: "flagName2",
-    value: true,
-    environment: "S2",
-  },
-  {
-    name: "flagName2",
-    value: true,
-    environment: "PROD",
+    values: {
+      s1: false,
+      s2: true,
+      prod: true,
+    },
   },
   {
     name: "flagName3",
-    value: 10,
-    environment: "S1",
-  },
-  {
-    name: "flagName3",
-    value: 20,
-    environment: "S2",
-  },
-
-  {
-    name: "flagName3",
-    value: 20,
-    environment: "PROD",
+    values: {
+      s1: 10,
+      s2: 20,
+      prod: 20,
+    },
   },
 ];
 

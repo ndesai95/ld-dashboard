@@ -2,7 +2,7 @@ import { LdFlag } from "@/api/launchDarkly";
 import { Box, Card, Text } from "@upstart/patina-design-system";
 import { ReactElement } from "react";
 
-export const FeatureFlagItem = ({ flags }: any): ReactElement => {
+export const FeatureFlagItem = ({ name, values }: LdFlag): ReactElement => {
   return (
     <Box>
       <Card
@@ -14,10 +14,10 @@ export const FeatureFlagItem = ({ flags }: any): ReactElement => {
           gridTemplateColumns: "1fr 1fr 1fr 1fr",
         }}
       >
-        <Text>{flags[0].name}</Text>
-        {flags.map((env: LdFlag) => (
-          <Text key={env.name}>{env.value.toString()}</Text>
-        ))}
+        <Text>{name}</Text>
+        <Text>{values.s1.toLocaleString()}</Text>
+        <Text>{values.s2.toLocaleString()}</Text>
+        <Text>{values.prod.toLocaleString()}</Text>
       </Card>
     </Box>
   );

@@ -7,9 +7,10 @@ import {
   Flex,
   FlexItem,
   Text,
+  TextField,
 } from "@upstart/patina-design-system";
 import styles from "../styles/Home.module.css";
-import { useState } from "react";
+import { FormEventHandler, useState } from "react";
 import { LdFlag, getLdFlags } from "@/api/launchDarkly";
 import { FeatureFlagItem } from "./FeatureFlagItem";
 
@@ -42,17 +43,20 @@ const ColumnHeader = () => {
 };
 export default function Home() {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [flags, setFlags] = useState(getLdFlags);
+
+  const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
+    let returnedFlags = [...getLdFlags];
+    returnedFlags = returnedFlags.filter((flag: LdFlag) =>
+      flag.name.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase())
+    );
+    setFlags(returnedFlags);
+    console.log(returnedFlags);
+  };
 
   const onClickAddProject = () => setShowDropdown(true);
-
-  let grouped = getLdFlags.reduce((result: any, currentValue: any) => {
-    (result[currentValue["name"]] = result[currentValue["name"]] || []).push(
-      currentValue
-    );
-    return result;
-  }, {});
-
-  console.log(Object.values(grouped));
 
   return (
     <>
@@ -67,11 +71,20 @@ export default function Home() {
         <Flex direction="row" className={styles.content}>
           <FlexItem flexBasis="66" style={{ padding: "10px" }}>
             <Box style={{ padding: "5xl" }}>
+              <form onSubmit={onSubmit}>
+                <TextField
+                  label="Search for a feature flag"
+                  onChange={(updatedValue) => {
+                    setSearchQuery(updatedValue.target.value);
+                  }}
+                  value={searchQuery}
+                />
+              </form>
               <ColumnHeader />
-              {Object.values(grouped).map((flags: any) => {
+              {flags.map((flag: any) => {
                 return (
-                  <Box key={"test"}>
-                    <FeatureFlagItem flags={flags} />;
+                  <Box key={flag.name}>
+                    <FeatureFlagItem name={flag.name} values={flag.values} />;
                   </Box>
                 );
               })}
