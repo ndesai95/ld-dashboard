@@ -10,34 +10,30 @@ import {
   TextField,
 } from "@upstart/patina-design-system";
 import styles from "../styles/Home.module.css";
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, ReactElement, useState } from "react";
 import { LdFlag, getLdFlags } from "@/api/launchDarkly";
 import { FeatureFlagItem } from "./FeatureFlagItem";
 
-const ColumnHeader = () => {
+const ColumnHeader = ({ title }: { title: string }): ReactElement => {
+  return <Text bold>{title}</Text>;
+};
+
+const GridHeaders = () => {
   return (
     <Box
       style={{
-        alignItems: "center",
         display: "grid",
         gap: "16px",
-        gridTemplateColumns: "1fr 1fr 1fr 1fr",
-        padding: "10px",
-        margin: "10px",
+        gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
+        padding: "32px",
+        alignItems: "center",
       }}
     >
-      <Text variant="detailMShort" bold>
-        Name
-      </Text>
-      <Text variant="detailMShort" bold>
-        Staging 1
-      </Text>
-      <Text variant="detailMShort" bold>
-        Staging 2
-      </Text>
-      <Text variant="detailMShort" bold>
-        Environment
-      </Text>
+      <ColumnHeader title="Name" />
+      <ColumnHeader title="Staging 1" />
+      <ColumnHeader title="Staging 2" />
+      <ColumnHeader title="Environment" />
+      <ColumnHeader title="Actions" />
     </Box>
   );
 };
@@ -80,7 +76,7 @@ export default function Home() {
                   value={searchQuery}
                 />
               </form>
-              <ColumnHeader />
+              <GridHeaders />
               {flags.map((flag: any) => {
                 return (
                   <Box key={flag.name}>
