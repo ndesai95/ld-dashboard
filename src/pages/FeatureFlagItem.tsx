@@ -29,6 +29,11 @@ export const FeatureFlagItem = ({ name, values }: LdFlag): ReactElement => {
       BannerVariant.success
     );
   };
+
+  const flagText = (flagValue: string): string => {
+    return flagValue + (flagValue != "true" && flagValue != "false" ? "%" : "");
+  };
+
   return (
     <Box>
       <Card
@@ -43,9 +48,9 @@ export const FeatureFlagItem = ({ name, values }: LdFlag): ReactElement => {
         <Text bold color="brand">
           {name}
         </Text>
-        <Text>{values.s1.toString()}</Text>
-        <Text>{values.s2.toString()}</Text>
-        <Text>{values.prod.toString()}</Text>
+        <Text>{flagText(values.s1.toString())}</Text>
+        <Text>{flagText(values.s2.toString())}</Text>
+        <Text>{flagText(values.prod.toString())}</Text>
         <Box>
           <ButtonIcon size="m" onClick={handleNotified}>
             {notified ? (
