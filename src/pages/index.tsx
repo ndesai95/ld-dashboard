@@ -10,10 +10,12 @@ import {
   TextField,
 } from "@upstart/patina-design-system";
 import styles from "../styles/Home.module.css";
-import { FormEventHandler, ReactElement, useState } from "react";
+import {FormEventHandler, ReactElement, useContext, useMemo, useState} from "react";
 import { LdFlag, getLdFlags } from "@/api/launchDarkly";
 import { FeatureFlagItem } from "./FeatureFlagItem";
 import { BaseLayout } from "@/templates/BaseLayout";
+import DeprecatedFlag from "@/components/deprecatedFlag/deprecatedFlag";
+import {BannerContext, BannerVariant} from "@/context/BannerContext";
 
 const ColumnHeader = ({ title }: { title: string }): ReactElement => {
   return <Text bold>{title}</Text>;
@@ -33,7 +35,7 @@ const GridHeaders = () => {
       <ColumnHeader title="Name" />
       <ColumnHeader title="Staging 1" />
       <ColumnHeader title="Staging 2" />
-      <ColumnHeader title="Environment" />
+      <ColumnHeader title="Production" />
       <ColumnHeader title="Actions" />
     </Box>
   );
@@ -42,6 +44,7 @@ export default function Home() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [flags, setFlags] = useState(getLdFlags);
+  const bannerContext = useContext(BannerContext);
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
@@ -53,6 +56,33 @@ export default function Home() {
     console.log(returnedFlags);
   };
 
+  const deprecatedFlags = [
+    {
+      key: 'deprecatedFlag1',
+      name: 'UseV2',
+      value: true,
+      status: 'Has not been requested in last 90 days'
+    },
+    {
+      key: 'deprecatedFlag2',
+      name: 'Experimental Flag',
+      value: false,
+      status: 'Status has been Inactive for 28 days'
+    },
+    {
+      key: 'deprecatedFlag3',
+      name: 'Fake Flag',
+      value: '10',
+      status: 'Only one variation served for last 365 days'
+    }
+  ]
+
+  const onSnoozeDeprecatedFlag = (flagName: string) => {
+    bannerContext.setMessage(
+      `Snoozed deprecated flag alert for ${flagName}`,
+      BannerVariant.success
+    );
+  }
   const onClickAddProject = () => setShowDropdown(true);
 
   return (
@@ -90,15 +120,19 @@ export default function Home() {
                 })}
               </Box>
             </FlexItem>
+            <Divider vertical />
             <FlexItem flexBasis="33">
               <Flex style={{ padding: "10px" }}>
-                <Card padding={"2xl"}>
-                  <Text>DEPRECATION STUFF</Text>
-                </Card>
+                <Heading size='m'>Deprecation Alerts</Heading>
+                <br />
+                {
+                  deprecatedFlags.map(flag => (<DeprecatedFlag key={flag.key} flag={flag} onSnooze={() => onSnoozeDeprecatedFlag(flag.name)}/>))
+                }
               </Flex>
               <Flex style={{ padding: "10px" }}>
-                <Card padding={"2xl"}>
-                  <Text>SYNC DOCS STUFF</Text>
+                <Heading size='m'>Sync</Heading>
+                <Card className={styles.syncContainer}>
+
                 </Card>
               </Flex>
             </FlexItem>

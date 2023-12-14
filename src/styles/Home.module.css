@@ -15,4 +15,8 @@
     padding: 24px;
     width: 90%;
   }
+
+  .syncContainer {
+    margin-top: 12px;
+  }
 }
