@@ -1,8 +1,11 @@
-import '@/styles/globals.css'
-import type {AppProps} from 'next/app'
-import '@upstart/patina-design-system/css-reset' // <-------- DON'T FORGET THIS FIRST
-import {PatinaProvider} from '@upstart/patina-design-system'
+import { BannerProvider } from "@/context/BannerProvider";
+import "@upstart/patina-design-system/css-reset";
+import { AppProps } from "next/app";
 
-export default function App({Component, pageProps}: AppProps) {
-  return <PatinaProvider><Component {...pageProps} /></PatinaProvider>
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <BannerProvider>
+      <Component {...pageProps} />
+    </BannerProvider>
+  );
 }

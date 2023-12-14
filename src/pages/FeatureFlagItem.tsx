@@ -1,39 +1,32 @@
 import { LdFlag } from "@/api/launchDarkly";
+import { ReactElement, SyntheticEvent, useContext, useState } from "react";
+
+import { BannerContext, BannerVariant } from "@/context/BannerContext";
 import {
   Box,
   ButtonIcon,
   Card,
-  IconNotifications,
+  IconNotificationsActive,
   IconNotificationsOff,
   Text,
 } from "@upstart/patina-design-system";
-import { ReactElement, SyntheticEvent, useState } from "react";
 
 export const FeatureFlagItem = ({ name, values }: LdFlag): ReactElement => {
   const [notified, setNotified] = useState(false);
+
+  const bannerContext = useContext(BannerContext);
 
   const handleNotified = async (e: SyntheticEvent): Promise<void> => {
     e.preventDefault();
 
     // make api call to change notification
     setNotified(!notified);
-  };
-  const FlagColumn = ({ name }: any): ReactElement => {
-    return (
-      <Box
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Text>{name.toString()}</Text>
-        {name.toString() == "true" && (
-          <ButtonIcon size="m">
-            <IconNotificationsOff size={"m"} />
-          </ButtonIcon>
-        )}
-      </Box>
+    bannerContext.setMessage(
+      "Successfully changed notification status for " +
+        name +
+        " to " +
+        notified,
+      BannerVariant.success
     );
   };
   return (
@@ -56,9 +49,15 @@ export const FeatureFlagItem = ({ name, values }: LdFlag): ReactElement => {
         <Box>
           <ButtonIcon size="m" onClick={handleNotified}>
             {notified ? (
-              <IconNotificationsOff size={"m"} />
+              <IconNotificationsOff
+                color={"warning"}
+                title="notification off"
+              />
             ) : (
-              <IconNotifications />
+              <IconNotificationsActive
+                color={"brand"}
+                title="notification on"
+              />
             )}
           </ButtonIcon>
         </Box>

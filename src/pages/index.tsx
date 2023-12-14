@@ -3,9 +3,9 @@ import {
   Button,
   Card,
   Divider,
-  Dropdown,
   Flex,
   FlexItem,
+  Heading,
   Text,
   TextField,
 } from "@upstart/patina-design-system";
@@ -13,6 +13,7 @@ import styles from "../styles/Home.module.css";
 import { FormEventHandler, ReactElement, useState } from "react";
 import { LdFlag, getLdFlags } from "@/api/launchDarkly";
 import { FeatureFlagItem } from "./FeatureFlagItem";
+import { BaseLayout } from "@/templates/BaseLayout";
 
 const ColumnHeader = ({ title }: { title: string }): ReactElement => {
   return <Text bold>{title}</Text>;
@@ -55,49 +56,55 @@ export default function Home() {
   const onClickAddProject = () => setShowDropdown(true);
 
   return (
-    <>
-      <Card className={styles.main}>
-        <div className={styles.header}>
-          <h1>LaunchDarkly Feature Flags Dashboard</h1>
-          <div className={styles.addProjectButton}>
-            <Button onChange={onClickAddProject}>Add Projects</Button>
-          </div>
-        </div>
-        <Divider />
-        <Flex direction="row" className={styles.content}>
-          <FlexItem flexBasis="66" style={{ padding: "10px" }}>
-            <Box style={{ padding: "5xl" }}>
-              <form onSubmit={onSubmit}>
-                <TextField
-                  label="Search for a feature flag"
-                  onChange={(updatedValue) => {
-                    setSearchQuery(updatedValue.target.value);
-                  }}
-                  value={searchQuery}
-                />
-              </form>
-              <GridHeaders />
-              {flags.map((flag: any) => {
-                return (
-                  <Box key={flag.name}>
-                    <FeatureFlagItem name={flag.name} values={flag.values} />;
-                  </Box>
-                );
-              })}
+    <BaseLayout>
+      <Box>
+        <Box className={styles.main}>
+          <Box className={styles.header}>
+            <Heading component="h1" size="xl">
+              Upstart Toggle Tracker
+            </Heading>
+            <Box className={styles.addProjectButton}>
+              <Button onChange={onClickAddProject}>Add Projects</Button>
             </Box>
-          </FlexItem>
-          <FlexItem flexBasis="33">
-            <Card>
-              <Flex>
-                <Card>DEPRECATION STUFF</Card>
+          </Box>
+          <Divider />
+          <Flex direction="row" className={styles.content}>
+            <FlexItem flexBasis="66" style={{ padding: "10px" }}>
+              <Box style={{ padding: "5xl" }}>
+                <form onSubmit={onSubmit}>
+                  <TextField
+                    label="Search for a feature flag"
+                    onChange={(updatedValue) => {
+                      setSearchQuery(updatedValue.target.value);
+                    }}
+                    value={searchQuery}
+                  />
+                </form>
+                <GridHeaders />
+                {flags.map((flag: any) => {
+                  return (
+                    <Box key={flag.name} style={{ padding: "10px" }}>
+                      <FeatureFlagItem name={flag.name} values={flag.values} />
+                    </Box>
+                  );
+                })}
+              </Box>
+            </FlexItem>
+            <FlexItem flexBasis="33">
+              <Flex style={{ padding: "10px" }}>
+                <Card padding={"2xl"}>
+                  <Text>DEPRECATION STUFF</Text>
+                </Card>
               </Flex>
-              <Flex>
-                <Card>SYNC DOCS STUFF</Card>
+              <Flex style={{ padding: "10px" }}>
+                <Card padding={"2xl"}>
+                  <Text>SYNC DOCS STUFF</Text>
+                </Card>
               </Flex>
-            </Card>
-          </FlexItem>
-        </Flex>
-      </Card>
-    </>
+            </FlexItem>
+          </Flex>
+        </Box>
+      </Box>
+    </BaseLayout>
   );
 }
