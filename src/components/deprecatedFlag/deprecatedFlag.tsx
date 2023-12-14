@@ -38,7 +38,7 @@ const DeprecatedFlag = ({flag, onSnooze}: DeprecatedFlagProps) => {
           </ButtonIcon>
         </FlexItem>
         <FlexItem>
-          <ButtonIcon onClick={archiveFlag}>
+          <ButtonIcon onClick={() => onSnooze(flag.key)}>
             <IconNotificationsOff/>
           </ButtonIcon>
         </FlexItem>
