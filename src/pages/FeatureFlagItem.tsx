@@ -21,11 +21,10 @@ export const FeatureFlagItem = ({ name, values }: LdFlag): ReactElement => {
 
     // make api call to change notification
     setNotified(!notified);
+    const message = notified ? "Unsnoozed" : "Snoozed";
+
     bannerContext.setMessage(
-      "Successfully changed notification status for " +
-        name +
-        " to " +
-        notified,
+      `${message} notification for ${name}`,
       BannerVariant.success
     );
   };
