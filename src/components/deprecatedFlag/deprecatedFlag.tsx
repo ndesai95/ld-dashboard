@@ -7,48 +7,51 @@ import {
   FlexItem,
   IconArchive,
   IconNotificationsOff,
-  Text
+  Text,
 } from "@upstart/patina-design-system";
-import styles from './deprecatedFlag.module.scss';
+import styles from "./deprecatedFlag.module.scss";
 interface DeprecatedFlagProps {
   flag: {
-    key: string,
-    name: string,
-    value: any,
-    status?: string,
-  }
+    key: string;
+    name: string;
+    value: any;
+    status?: string;
+  };
   onSnooze: (id: string) => void;
 }
 
-const DeprecatedFlag = ({flag, onSnooze}: DeprecatedFlagProps) => {
-
+const DeprecatedFlag = ({ flag, onSnooze }: DeprecatedFlagProps) => {
   const archiveFlag = () => {
-    console.log('ARCHIVING');
-  }
+    console.log("ARCHIVING");
+  };
 
   return (
     <Card className={styles.container}>
-      <Flex direction='row' justifyContent='spaceBetween'>
-        <FlexItem flexBasis='66'>
-          <Text>{flag.name}</Text>
+      <Flex direction="row" justifyContent="spaceBetween" alignItems={"center"}>
+        <FlexItem flexBasis="66">
+          <Text bold color={"brand"}>
+            {flag.name}
+          </Text>
         </FlexItem>
         <FlexItem>
           <ButtonIcon onClick={archiveFlag}>
-            <IconArchive/>
+            <IconArchive />
           </ButtonIcon>
         </FlexItem>
         <FlexItem>
           <ButtonIcon onClick={() => onSnooze(flag.key)}>
-            <IconNotificationsOff/>
+            <IconNotificationsOff />
           </ButtonIcon>
         </FlexItem>
       </Flex>
       <Divider />
       <Box className={styles.status}>
-        <Text variant='detailS'>{flag.status}</Text>
+        <Text variant="detailS" color={"neutral70"}>
+          {flag.status}
+        </Text>
       </Box>
     </Card>
-  )
-}
+  );
+};
 
 export default DeprecatedFlag;

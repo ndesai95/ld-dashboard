@@ -19,7 +19,7 @@ export type LdFlag = {
   */
 export const getLdFlags: LdFlag[] = [
   {
-    name: "flagName1",
+    name: "Call Chrome for Vehicle Data",
     values: {
       s1: false,
       s2: false,
@@ -27,7 +27,7 @@ export const getLdFlags: LdFlag[] = [
     },
   },
   {
-    name: "flagName2",
+    name: "Use Gap Waiver Stip",
     values: {
       s1: false,
       s2: true,
@@ -35,7 +35,7 @@ export const getLdFlags: LdFlag[] = [
     },
   },
   {
-    name: "flagName3",
+    name: "Counter Offers Enabled",
     values: {
       s1: 10,
       s2: 20,

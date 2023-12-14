@@ -34,38 +34,30 @@ export const FeatureFlagItem = ({ name, values }: LdFlag): ReactElement => {
   };
 
   return (
-    <Box>
-      <Card
-        padding={"2xl"}
-        style={{
-          alignItems: "center",
-          display: "grid",
-          gap: "16px",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
-        }}
-      >
-        <Text bold color="brand">
-          {name}
-        </Text>
-        <Text>{flagText(values.s1.toString())}</Text>
-        <Text>{flagText(values.s2.toString())}</Text>
-        <Text>{flagText(values.prod.toString())}</Text>
-        <Box>
-          <ButtonIcon size="m" onClick={handleNotified}>
-            {notified ? (
-              <IconNotificationsOff
-                color={"warning"}
-                title="notification off"
-              />
-            ) : (
-              <IconNotificationsActive
-                color={"brand"}
-                title="notification on"
-              />
-            )}
-          </ButtonIcon>
-        </Box>
-      </Card>
-    </Box>
+    <Card
+      padding={"2xl"}
+      style={{
+        alignItems: "center",
+        display: "grid",
+        gap: "16px",
+        gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
+      }}
+    >
+      <Text bold color="brand">
+        {name}
+      </Text>
+      <Text>{flagText(values.s1.toString())}</Text>
+      <Text>{flagText(values.s2.toString())}</Text>
+      <Text>{flagText(values.prod.toString())}</Text>
+      <Box>
+        <ButtonIcon size="m" onClick={handleNotified}>
+          {notified ? (
+            <IconNotificationsOff color={"warning"} title="notification off" />
+          ) : (
+            <IconNotificationsActive color={"brand"} title="notification on" />
+          )}
+        </ButtonIcon>
+      </Box>
+    </Card>
   );
 };
